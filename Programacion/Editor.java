@@ -1,4 +1,4 @@
-public class Editor extends Empresa{
+public class Editor extends Empresa{ //Luis Bernabeu Fuster
     public Editor(int idEmpresa, String nombre, String pais) {
         super(idEmpresa, nombre, pais);
     }

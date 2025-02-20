@@ -1,4 +1,4 @@
-public class Developer extends Empresa{
+public class Developer extends Empresa{ //Luis Bernabeu Fuster
     public Developer(int idEmpresa, String nombre, String pais) {
         super(idEmpresa, nombre, pais);
     }

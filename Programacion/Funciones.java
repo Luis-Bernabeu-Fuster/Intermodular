@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Funciones {
+public class Funciones { //Luis Bernabeu Fuster
     ArrayList<Empresa> empresas = new ArrayList<>();
 
     public Funciones() {
