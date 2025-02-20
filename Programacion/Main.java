@@ -18,48 +18,46 @@ public class Main { //Luis Bernabeu Fuster
     }
     public static void addEmpresa(Funciones funciones){
 
-
         boolean fin = true;
         int id;
         String nombre;
         String pais;
+        int tpe;
 
-        String resp;
-        while (fin){
-            System.out.print("Desa añadir una nueva empresa (S/N): ");
-            resp = scanner.next();
+        id = Validar.IdEmpresa();
+        nombre = Validar.Nombre();
+        pais = Validar.Pais();
+        tpe = tipoEmpresa();
 
-            if (resp.equalsIgnoreCase("S")){
-
-                id = Validar.IdEmpresa();
-                nombre = Validar.Nombre();
-                pais = Validar.Pais();
-
-                if (tipoEmpresa() == 1) {
-                    funciones.addNewEmpresa(Developer.createEmpresa(id,nombre,pais));
-                } else {
-                    funciones.addNewEmpresa(Editor.createEmpresa(id,nombre,pais));
-                }
-            } else {
-                System.out.println("Saliendo");
-                fin = false;
-
-            }
-        }
+        funciones.addNewEmpresa(Developer.createEmpresa(id,nombre,pais),Editor.createEmpresa(id,nombre,pais),tpe);
+        System.out.println("\n================================================");
     }
+
 
     public static void printEmpresa(Funciones funciones){
         funciones.printEmpresas();
     }
 
-    public static void consultarEmpresa(){
-        Validar validar = new Validar();
-        Funciones funciones = new Funciones();
-        int id;
+    public static void consultarEmpresa(Funciones funciones){
 
-        System.out.print("Introduzca el id para hacer la consulta: ");
-        id = validar.IdEmpresa();
-        funciones.findEmpresa(id);
+        int id = Validar.IdEmpresa();
+
+        if (funciones.queryEmpresa(id) == null){
+            System.out.println("No existe la empresa indicada");
+        } else {
+            System.out.println(funciones.queryEmpresa(id));
+        }
+    }
+
+    public static void opciones(){
+        System.out.println("================================================\n");
+        System.out.println("1. Añadir Empresa\n" +
+                            "2. Eliminar Empresa\n" +
+                            "3. Actualizar Empresa\n" +
+                            "4. Consultar Empresa\n" +
+                            "5. Imprimir todas las Empresas\n" +
+                            "6. Salir.");
+        System.out.println("\n================================================\n");
     }
 
     public static void menu(Funciones funciones){
@@ -67,22 +65,63 @@ public class Main { //Luis Bernabeu Fuster
         boolean continuar = true;
         int opcion;
         while (continuar) {
+            opciones();
             opcion = Validar.opcionMenu();
+            System.out.println("\n================================================\n");
 
             switch (opcion) {
                 case 1:
+                    System.out.println("--- Añadir Empresa ---");
                     addEmpresa(funciones);
                     break;
 
                 case 2:
-                    funciones.printEmpresas();
+                    System.out.println("--- Eliminar Empresa ---");
+                    opcion = Validar.IdEmpresa();
+
+                    Empresa borrar = funciones.queryEmpresa(opcion);
+
+                    if (funciones.removeEmpresa(borrar)){
+                        System.out.println("Se elimino la empresa");
+                    } else {
+                        System.out.println("Error no existe esa empresa");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("--- Actualizar Empresa ---");
+                    opcion = Validar.IdEmpresa();
+
+                    if (funciones.queryEmpresa(opcion) == null){
+                        System.out.println("La empresa no existe");
+                    } else {
+                        Empresa anteUp = funciones.queryEmpresa(opcion);
+
+                        int id = opcion;
+                        String name = Validar.Nombre();
+                        String pais = Validar.Pais();
+
+                        if (tipoEmpresa() == 1){
+                            Empresa postUp = new Developer(id,name,pais);
+                            funciones.updateEmpresa(anteUp,postUp);
+                        } else {
+                            Empresa postUp = new Editor(id,name,pais);
+                            funciones.updateEmpresa(anteUp,postUp);
+                        }
+
+                    }
                     break;
 
                 case 4:
-                    consultarEmpresa();
+                    System.out.println("--- Consultar Empresa---");
+                    consultarEmpresa(funciones);
                     break;
 
-                case 11:
+                case 5:
+                    System.out.println("Lista actual: ");
+                    printEmpresa(funciones);
+                    break;
+                case 6:
                     System.out.println("Saliendo del programa");
                     continuar = false;
                     break;
