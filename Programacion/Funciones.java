@@ -85,6 +85,26 @@ public class Funciones { //Luis Bernabeu Fuster
         }
     }
 
+    public void generarXML(){
+        if (this.empresas.isEmpty()){
+            System.out.println("De momento esta vacio");
+        } else {
+            System.out.println("<listado_empresas>\n");
+            for (int i = 0; i < this.empresas.size();i++){
+                System.out.println("    <empresa>");
+                System.out.println("        <id>" + this.empresas.get(i).idEmpresa + "</id>");
+                System.out.println("        <nombre>" + this.empresas.get(i).nombre + "</nombre>");
+                System.out.println("        <pais>" + this.empresas.get(i).pais + "</pais>");
+                if (this.empresas.get(i).toString().contains("Developer")){
+                    System.out.println("        <tipo>Developer</tipo>");
+                }else {
+                    System.out.println("        <tipo>Editor</tipo>");
+                }
+                System.out.println("    </empresa>\n");
 
+            }
+            System.out.println("</listado_empresas>");
+        }
+    }
 
 }

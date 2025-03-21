@@ -56,7 +56,8 @@ public class Main { //Luis Bernabeu Fuster
                             "3. Actualizar Empresa\n" +
                             "4. Consultar Empresa\n" +
                             "5. Imprimir todas las Empresas\n" +
-                            "6. Salir.");
+                            "6. Generar XML\n" +
+                            "7. Salir.");
         System.out.println("\n================================================\n");
     }
 
@@ -121,7 +122,13 @@ public class Main { //Luis Bernabeu Fuster
                     System.out.println("Lista actual: ");
                     printEmpresa(funciones);
                     break;
+
                 case 6:
+                    System.out.println("Formato XML");
+                    funciones.generarXML();
+                    break;
+
+                case 7:
                     System.out.println("Saliendo del programa");
                     continuar = false;
                     break;

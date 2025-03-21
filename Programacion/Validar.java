@@ -50,6 +50,8 @@ public class Validar { //Luis Bernabeu Fuster
             if (name.length() > 32){
                 System.out.println("El nombre no puede contener mas de 32 caracteres ");
 
+            } else if (name.isEmpty()) {
+                System.out.println("El nombre no puede estar vacio");
             } else {
                 fin = true;
             }
@@ -65,16 +67,19 @@ public class Validar { //Luis Bernabeu Fuster
         while (!fin){
             System.out.print("Introduzca el nombre del país: ");
             p = scanner.nextLine();
+            if (p.isEmpty()){
+                System.out.println("El país no puede estar vacio");
+            }else {
+                c1 = p.charAt(0);
+                if (Character.isDigit(c1)) {
+                    System.out.println("No existe país que inicie mediante digito");
 
-            c1 = p.charAt(0);
-            if (Character.isDigit(c1)){
-                System.out.println("No existe país que inicie mediante digito");
+                } else if (p.length() > 32) {
+                    System.out.println("El nombre del país no puede contener más de 32 digitos");
 
-            } else if (p.length() > 32) {
-                System.out.println("El nombre del país no puede contener más de 32 digitos");
-
-            } else {
-                fin = true;
+                } else {
+                    fin = true;
+                }
             }
         }
         return p;
@@ -88,13 +93,13 @@ public class Validar { //Luis Bernabeu Fuster
             try {
                 opc = scanner.nextInt();
             } catch (InputMismatchException e) {
-                System.out.println("Escoja una opcion valida (1 - 6)");
+                System.out.println("Escoja una opcion valida (1 - 7)");
                 System.out.println("=============================================\n");
                 scanner.nextLine();
                 break;
             }
-            if (opc <= 0 || opc > 6){
-                System.out.println("Opción no valida (1 - 6)");
+            if (opc <= 0 || opc > 7){
+                System.out.println("Opción no valida (1 - 7)");
                 System.out.println("=============================================\n");
                 scanner.nextLine();
             } else {
