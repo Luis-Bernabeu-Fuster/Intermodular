@@ -98,8 +98,8 @@ public class Validar { //Luis Bernabeu Fuster
                 scanner.nextLine();
                 break;
             }
-            if (opc <= 0 || opc > 7){
-                System.out.println("Opción no valida (1 - 7)");
+            if (opc <= 0 || opc > 8){
+                System.out.println("Opción no valida (1 - 8)");
                 System.out.println("=============================================\n");
                 scanner.nextLine();
             } else {

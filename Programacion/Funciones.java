@@ -1,4 +1,7 @@
+import java.io.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Funciones { //Luis Bernabeu Fuster
     ArrayList<Empresa> empresas = new ArrayList<>();
@@ -86,25 +89,59 @@ public class Funciones { //Luis Bernabeu Fuster
     }
 
     public void generarXML(){
-        if (this.empresas.isEmpty()){
-            System.out.println("De momento esta vacio");
-        } else {
-            System.out.println("<listado_empresas>\n");
-            for (int i = 0; i < this.empresas.size();i++){
-                System.out.println("    <empresa>");
-                System.out.println("        <id>" + this.empresas.get(i).idEmpresa + "</id>");
-                System.out.println("        <nombre>" + this.empresas.get(i).nombre + "</nombre>");
-                System.out.println("        <pais>" + this.empresas.get(i).pais + "</pais>");
-                if (this.empresas.get(i).toString().contains("Developer")){
-                    System.out.println("        <tipo>Developer</tipo>");
-                }else {
-                    System.out.println("        <tipo>Editor</tipo>");
-                }
-                System.out.println("    </empresa>\n");
+        String nombrecalss = Empresa.class.getSimpleName();
+        Field[] clase = Empresa.class.getDeclaredFields();
+        String tipo1 = Developer.class.getSimpleName();
+        String tipo2 = Editor.class.getSimpleName();
+        String etiqueta1 = clase[0].getName();
+        String etiqueta2 = clase[1].getName();
+        String etiqueta3 = clase[2].getName();
 
+        if (this.empresas.isEmpty()){
+            System.out.println("Actualmente no existe información para guardar");
+        } else {
+            try {
+                FileWriter f = new FileWriter("listadoEmpresas.xml");
+                BufferedWriter buf = new BufferedWriter(f);
+                buf.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+                buf.write("<listado_empresas>\n");
+                for (int i = 0; i < this.empresas.size(); i++) {
+                    buf.write("    <" + nombrecalss + ">\n");
+                    buf.write("        <" + etiqueta1 + ">" + this.empresas.get(i).idEmpresa + "</" + etiqueta1 + ">\n");
+                    buf.write("        <" + etiqueta2 + ">" + this.empresas.get(i).nombre + "</" + etiqueta2 + ">\n");
+                    buf.write("        <" + etiqueta3 + ">" + this.empresas.get(i).pais + "</" + etiqueta3 + ">\n");
+                    if (this.empresas.get(i).toString().contains("Developer")) {
+                        buf.write("        <tipo>" + tipo1 + "</tipo>\n");
+                    } else {
+                        buf.write("        <tipo>" + tipo2 + "</tipo>\n");
+                    }
+                    buf.write("    </" + nombrecalss + ">\n");
+                }
+                buf.write("</listado_empresas>");
+                buf.close();
+                System.out.println("XML generado con exito");
+            }catch (IOException e){
+                System.out.println(e.getMessage());
             }
-            System.out.println("</listado_empresas>");
         }
     }
+
+    public void leerXML(){
+
+            File f = new File("listadoEmpresas.xml");
+            String contet;
+            Scanner lee;
+        try {
+            lee = new Scanner(f);
+                while (lee.hasNextLine()) {
+                    contet = lee.nextLine();
+                    System.out.println(contet);
+                }
+        }catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 
 }
